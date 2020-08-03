@@ -1,0 +1,47 @@
+
+.my-container{
+  margin-top: 20px;
+  border: solid;
+  padding: 20px;
+}
+
+.row-layout{
+  padding-left: 20px;
+}
+
+#summary-box{
+  border: solid;
+  border-width: 1px;
+  text-align: left;
+  padding: 0px;
+  margin-top: 10px;
+  overflow: hidden;
+  resize: none;
+}
+
+
+.file-label{
+  border: solid 1px #ccc;
+}
+
+#img-upload{
+  display: none;
+}
+
+.user-form{
+  border: solid 1px #ccc;
+  padding: 20px;
+}
+
+.err{
+  margin: 10px;
+}
+
+
+.r-cell{
+  border: 1px solid;
+  margin-top: 40px;
+}
+
+
+

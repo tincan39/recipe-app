@@ -1,0 +1,26 @@
+{
+  "name": "recipe-app",
+  "version": "1.0.0",
+  "description": "recipe app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.721.0",
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "bluebird": "^3.7.2",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.9",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.9.16",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  }
+}
