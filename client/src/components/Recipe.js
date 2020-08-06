@@ -2,21 +2,9 @@ import React, { useState, useEffect } from 'react'
 import TextareaAutosize from 'react-textarea-autosize';
 import axios from 'axios';
 import { Nav2 } from './Nav';
-import checkAuth from '../utility';
+
 
 function Recipe(props) {
-
-    //redirects the user to the login page if not authenticated
-    useEffect(() => {
-        const init = async () => {
-            let res = await checkAuth();
-            if (!res) {
-                props.history.push('/login');
-            }
-        }
-        init();
-    }, [props.history]);
-
     const { content, type, user } = props;
     //various parts of the recipe
     const [name, setName] = useState(content.title);
@@ -27,6 +15,15 @@ function Recipe(props) {
     const [step, setStep] = useState('');
     //An error message if it occurs
     const [error, setError] = useState('');
+
+    let isView = (type === 'view');
+
+    useEffect(() => {
+        setName(content.title);
+        setSummary(content.summary);
+        setSteps(() => !content.steps ? [] : [...content.steps]);
+        setImgUrl(content.imgUrl);
+    }, [content])
 
     //adds a step to the recipe
     const addStep = () => {
@@ -86,10 +83,9 @@ function Recipe(props) {
     }
 
     const unsaveRecipe = () => {
-        let rList = user.savedRecipes.filter(val => val !== content.id);
         axios.post('/db/unsave', {
             uid: user.id,
-            savedRecipes: rList
+            recipeId: content.id
         }).then(res => {
             localStorage.setItem('user', JSON.stringify(res.data.user));
             props.history.push(`/${user.username}/home`);
@@ -121,8 +117,8 @@ function Recipe(props) {
                         <TextareaAutosize contentEditable={type !== 'view'} className="col-5" id="summary-box" onChange={(e) => { setSummary(e.target.value) }} value={summary} />
                         <div className="col-4" style={{ marginLeft: "90px", marginTop: "10px" }}>
                             <img width="400" height="400" src={imgUrl} alt="" />
-                            <label className="file-label" htmlFor="img-upload"> Upload image </label>
-                            <input onChange={imgSelect} id="img-upload" type="file" accept="image/*" />
+                            {!isView && <label className="file-label" htmlFor="img-upload"> Upload image </label>}
+                            {!isView && <input onChange={imgSelect} id="img-upload" type="file" accept="image/*" />}
                         </div>
                     </div>
                     <label>Steps:</label>
@@ -132,7 +128,7 @@ function Recipe(props) {
 
                                 <li style={{ fontSize: "17px" }} key={val.spot}>
                                     {val.step}
-                                    <button style={{ fontSize: "7px", marginLeft: "20px" }} id={val.spot} onClick={deleteStep} type="button" className="btn-xs btn-danger">X</button>
+                                    {!isView && <button style={{ fontSize: "7px", marginLeft: "20px" }} id={val.spot} onClick={deleteStep} type="button" className="btn-xs btn-danger">X</button>}
                                 </li>
                             ))}
                         </ol>
@@ -142,9 +138,9 @@ function Recipe(props) {
                         <button style={{ marginLeft: "10px" }} className="btn btn-primary col-2" type='button' onClick={addStep} >Add Step</button>
                     </div>}
                     <div className="row row-layout">
-                        {(type === 'view' && !user.savedRecipes.includes(content.id)) && <button onClick={saveRecipe} style={{ marginTop: "10px" }} className='btn btn-primary' type='button'>save</button>}
-                        {(type === 'view' && user.savedRecipes.includes(content.id)) && <button onClick={unsaveRecipe} style={{ marginTop: "10px" }} className='btn btn-primary' type='button'>unsave</button>}
-                        {type !== 'view' && <button style={{ marginTop: "10px" }} className='btn btn-success' type='submit'>submit</button>}
+                        {(isView && !user.savedRecipes.includes(content.id)) && <button onClick={saveRecipe} style={{ marginTop: "10px" }} className='btn btn-primary' type='button'>save</button>}
+                        {(isView && user.savedRecipes.includes(content.id)) && <button onClick={unsaveRecipe} style={{ marginTop: "10px" }} className='btn btn-primary' type='button'>unsave</button>}
+                        {!isView && <button style={{ marginTop: "10px" }} className='btn btn-success' type='submit'>submit</button>}
                         {type === 'edit' && <button onClick={deleteRecipe} style={{ marginTop: "10px" }} className='btn btn-danger' type='button'>delete</button>}
                     </div>
                     <div className="row">

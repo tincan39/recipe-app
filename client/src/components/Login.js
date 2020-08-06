@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Nav from './Nav';
 import axios from 'axios';
+import UserContext from '../contexts/UserContext';
 
 
 
 
 function Login(props) {
 
+    const { setAuth } = useContext(UserContext.context);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isErr, setIsErr] = useState(false);
@@ -20,6 +22,7 @@ function Login(props) {
         }
         axios.post('/login', user).then(res => {
             localStorage.setItem("user", JSON.stringify(res.data.user));
+            setAuth(true);
             props.history.push(`/${res.data.user.username}/home`);
         })
             .catch(err => {

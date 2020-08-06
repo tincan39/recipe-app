@@ -2,9 +2,14 @@ import axios from 'axios';
 
 
 //checks if the user is authenticated 
-async function checkAuth() {
-    let response = await axios('/authUser');
-    return response.data.isAuth;
+async function queryRecipe(id) {
+    let res = await axios('/db/getOne', {
+        params: {
+            id: id
+        }
+    });
+
+    return res;
 }
 
-export default checkAuth;
+export default queryRecipe;

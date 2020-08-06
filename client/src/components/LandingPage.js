@@ -6,7 +6,7 @@ function LandingPage() {
     return (
         <div>
             <Nav />
-
+            <h2>Recify</h2>
         </div>
     )
 }

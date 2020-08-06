@@ -24,6 +24,7 @@ export function Nav2(props) {
         localStorage.removeItem('user');
         axios.get('/logout').then((res) => props.history.push('/login'))
     }
+
     return (
         <nav className="nav">
             <Link className="nav-link" to={() => !user ? '' : `/${user.username}/home`}>Home</Link>

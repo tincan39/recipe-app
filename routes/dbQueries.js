@@ -5,30 +5,31 @@ const mongoose = require('mongoose');
 
 //retrieves recipe items
 router.get('/get', async (req, res) => {
-    console.log(req.query);
     let recipes = {};
-    recipes.myRecipes = await Recipe.find({ userId: req.query.uid });
-    if (req.query.savedKeys) {
+    recipes.myRecipes = await Recipe.find({ userId: req.query.uid }, '_id name');
+    let savedKeys = await User.findById(req.query.uid, 'savedRecipes');
+    savedKeys = savedKeys.savedRecipes;
+    if (savedKeys) {
         recipes.savedRecipes = await Recipe.find({
             _id: {
-                $in: req.query.savedKeys.map(val => mongoose.Types.ObjectId(val))
+                $in: savedKeys.map(val => mongoose.Types.ObjectId(val))
             }
-        });
+        }, '_id name');
     }
     else {
         recipes.savedRecipes = [];
     }
     res.send(recipes);
-
-
 });
 
 //retrieves a single recipe item
-router.post('/getOne', (req, res) => {
+router.get('/getOne', (req, res) => {
 
-    Recipe.findById(req.body.id).then((recipe) => {
+    console.log(req.query.id);
+
+    Recipe.findById(req.query.id).then((recipe) => {
         if (!recipe) {
-            res.status(404).send({ message: 'recipe could not be found' });
+            res.status(400).send({ message: 'recipe could not be found' });
         }
         else {
             res.send(recipe);
@@ -47,7 +48,6 @@ router.get('/search', (req, res) => {
 //creates a recipe item
 router.post('/create', (req, res) => {
 
-    console.log(req.body);
 
     new Recipe({
         name: req.body.name,
@@ -67,7 +67,7 @@ router.post('/edit', (req, res) => {
         name: req.body.name,
         description: req.body.description,
         steps: req.body.steps,
-        imgUr: req.body.imgUrl,
+        imgUrl: req.body.imgUrl,
         userId: req.body.userId,
         lowerName: req.body.name.toLowerCase()
     }, (err) => {
@@ -115,16 +115,17 @@ router.post('/save', (req, res) => {
 //unsaves another user's recipe
 router.post('/unsave', (req, res) => {
 
-    User.findByIdAndUpdate(req.body.uid, {
-        savedRecipes: req.body.savedRecipes
-    }, { new: true }, (err, doc) => {
-        if (err) {
-            res.status(400).send(err);
-        }
-        else {
-            res.send({ user: { username: doc.username, id: doc._id, savedRecipes: doc.savedRecipes } });
-        }
-    });
+    User.findByIdAndUpdate(req.body.uid,
+        { $pull: { savedRecipes: req.body.recipeId } }
+        , { new: true }, (err, doc) => {
+            if (err) {
+                res.status(400).send("error")
+            }
+            else {
+                console.log(doc);
+                res.send({ user: { username: doc.username, id: doc._id, savedRecipes: doc.savedRecipes } });
+            }
+        });
 
 });
 

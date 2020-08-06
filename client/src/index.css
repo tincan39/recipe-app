@@ -1,4 +1,16 @@
 
+body{
+  background-color: #fbfbf8;
+}
+
+.nav{
+  background-color: #664c6d;
+}
+
+.nav a{
+  color: black;
+}
+
 .my-container{
   margin-top: 20px;
   border: solid;
@@ -41,6 +53,14 @@
 .r-cell{
   border: 1px solid;
   margin-top: 40px;
+}
+
+.r-cell li{
+  list-style-type: none;
+}
+
+ul{
+  padding-left: 0;
 }
 
 

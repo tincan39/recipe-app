@@ -3,7 +3,6 @@ import UserContext from '../contexts/UserContext';
 import { Nav2 } from './Nav';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import checkAuth from '../utility';
 
 
 function Homepage(props) {
@@ -16,30 +15,20 @@ function Homepage(props) {
 
 
     useEffect(() => {
-        const init = async () => {
+        //retrieves recipes from the database if they are
+        axios.get('/db/get', {
+            params: {
+                uid: user.id
+            }
+        })
+            .then((res) => {
+                setRecipes(res.data.myRecipes);
+                setSaved(res.data.savedRecipes);
+            })
+            .catch(err => console.log(err));
 
-            const res = await checkAuth();          //checks if the user is authenticated
-            if (!res) {
-                props.history.push('/login')        //returns them back to the login page if they are not
-            }
-            else {
-                //retrieves recipes from the database if they are
-                console.log(user.savedRecipes);
-                axios.get('/db/get', {
-                    params: {
-                        uid: user.id,
-                        savedKeys: user.savedRecipes
-                    }
-                })
-                    .then((res) => {
-                        setRecipes(res.data.myRecipes);
-                        setSaved(res.data.savedRecipes);
-                    })
-                    .catch(err => console.log(err));
-            }
-        }
-        init();
-    }, [props.history, user.id, user.savedRecipes]);
+
+    }, [user.id]);
 
     //redirects user to where the recipe can be edited
     const linkClick = (e) => {
@@ -52,7 +41,7 @@ function Homepage(props) {
     const viewLink = (e) => {
         const index = parseInt(e.target.id);
         setCurrentRecipe(savedRecipes[index]);
-        props.history.push(`/${user.username}/view/${recipes[index]._id}`);
+        props.history.push(`/${user.username}/view/${savedRecipes[index]._id}`);
     }
 
     const search = (e) => {
@@ -102,7 +91,7 @@ function Homepage(props) {
                     </div>
                 </div>
                 <div className="row">
-                    <Link className="btn btn-light" to={`/${props.match.params.username}/create`}> Create Recipe </Link>
+                    <Link className="btn btn-dark" to={`/${props.match.params.username}/create`}> Create Recipe </Link>
                 </div>
             </div>
         </div>

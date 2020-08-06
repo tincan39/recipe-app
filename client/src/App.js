@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 //import Recipe from './components/Recipe';
 import CreateRecipe from "./components/CreateRecipe";
 import Login from "./components/Login";
@@ -9,8 +9,35 @@ import LandingPage from './components/LandingPage';
 import EditRecipe from './components/EditRecipe';
 import SearchPage from './components/SearchPage';
 import ViewRecipe from './components/ViewRecipe';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+//import checkAuth from './utility';
+import axios from 'axios';
 
+
+function ProtectedRoute({ component: Component, ...rest }) {
+  const [authCheck, setAuthCheck] = useState({ isAuth: false, loading: true });
+  const { auth } = useContext(UserContext.context);
+
+  useEffect(() => {
+    axios.get('/authUser').then(res => {
+      setAuthCheck({ isAuth: res.data.isAuth, loading: false });
+    });
+  }, []);
+
+
+
+  return (
+
+    <Route {...rest} render={(props) =>
+      (!authCheck.loading) ? (authCheck.isAuth || auth) ? (<Component {...props} />) : (<Redirect to={{
+        pathname: "/login",
+        state: { from: props.location },
+      }} />)
+        : (<div>loading</div>)
+    } />
+  );
+
+}
 
 function App() {
 
@@ -18,13 +45,13 @@ function App() {
     <div>
       <BrowserRouter>
         <UserContext>
-          <Route path="/:username/home" component={Homepage} />
-          <Route path='/:username/edit/:id' component={EditRecipe} />
-          <Route path='/:username/create' component={CreateRecipe} />
-          <Route path='/:username/search' component={SearchPage} />
-          <Route path='/:username/view/:id' component={ViewRecipe} />
+          <ProtectedRoute component={Homepage} path="/:username/home" />
+          <ProtectedRoute path='/:username/edit/:id' component={EditRecipe} />
+          <ProtectedRoute path='/:username/create' component={CreateRecipe} />
+          <ProtectedRoute path='/:username/search' component={SearchPage} />
+          <ProtectedRoute path='/:username/view/:id' component={ViewRecipe} />
+          <Route path='/login' component={Login} />
         </UserContext>
-        <Route path='/login' component={Login} />
         <Route path='/register' component={Register} />
         <Route exact path="/" component={LandingPage} />
       </BrowserRouter>
