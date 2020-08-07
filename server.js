@@ -13,10 +13,17 @@ const fileUpload = require('express-fileupload');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 
-
+let mongoURI;
+if (process.env.mongoURI) {
+    mongoURI = process.env.mongoURI;
+    console.log(mongoURI);
+}
+else {
+    mongoURI = require('./config/keys').mongoURI;
+}
 
 //connect to database
-mongoose.connect(process.env.mongoURI || require('./config/keys').mongoURI, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+mongoose.connect(mongoURI, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(console.log('connection successful')).catch(err => console.error(err));
 
 //express object
