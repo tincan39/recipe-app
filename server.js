@@ -16,7 +16,7 @@ const path = require('path');
 
 
 //connect to database
-mongoose.connect(require('./config/keys').mongoURI, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+mongoose.connect(process.env.mongoURI || require('./config/keys').mongoURI, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(console.log('connection successful')).catch(err => console.error(err));
 
 //express object

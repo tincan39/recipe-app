@@ -2,7 +2,10 @@ const router = require('express').Router();
 const aws = require('aws-sdk');
 
 
-const s3 = new aws.S3();
+const s3 = new aws.S3({
+    accessKeyId: process.env.S3_KEY,
+    secretAccessKey: process.env.S3_SECRET
+});
 
 //request allowing user to upload a recipe image into aws s3 bucket
 router.post('/upload', (req, res) => {
