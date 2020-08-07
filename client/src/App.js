@@ -9,7 +9,7 @@ import LandingPage from './components/LandingPage';
 import EditRecipe from './components/EditRecipe';
 import SearchPage from './components/SearchPage';
 import ViewRecipe from './components/ViewRecipe';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, useLocation } from 'react-router-dom';
 //import checkAuth from './utility';
 import axios from 'axios';
 
@@ -17,14 +17,14 @@ import axios from 'axios';
 function ProtectedRoute({ component: Component, ...rest }) {
   const [authCheck, setAuthCheck] = useState({ isAuth: false, loading: true });
   const { auth } = useContext(UserContext.context);
+  let location = useLocation();
+
 
   useEffect(() => {
     axios.get('/authUser').then(res => {
       setAuthCheck({ isAuth: res.data.isAuth, loading: false });
     });
-  }, []);
-
-
+  }, [location]);
 
   return (
 
@@ -48,7 +48,7 @@ function App() {
           <ProtectedRoute component={Homepage} path="/:username/home" />
           <ProtectedRoute path='/:username/edit/:id' component={EditRecipe} />
           <ProtectedRoute path='/:username/create' component={CreateRecipe} />
-          <ProtectedRoute path='/:username/search' component={SearchPage} />
+          <ProtectedRoute path='/:username/search/:q' component={SearchPage} />
           <ProtectedRoute path='/:username/view/:id' component={ViewRecipe} />
           <Route path='/login' component={Login} />
         </UserContext>

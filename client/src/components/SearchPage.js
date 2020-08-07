@@ -1,15 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Nav2 } from './Nav';
-import UserContext from '../contexts/UserContext';
+import axios from 'axios';
 
 function SearchPage(props) {
 
     const user = JSON.parse(localStorage.getItem("user"));
-    const { searchedRecipes, setCurrentRecipe } = useContext(UserContext.context);
+    //const { searchedRecipes, setCurrentRecipe } = useContext(UserContext.context);
+    const [searchedRecipes, setSearched] = useState([]);
+
+    useEffect(() => {
+        axios.get('/db/search', {
+            params: {
+                item: props.match.params.q,
+                uid: user.id
+            }
+        }).then(res => {
+            console.log(res.data);
+            setSearched(res.data);
+        })
+    }, [props.match.params.q, user.id]);
 
     const linkClick = (e) => {
         const index = parseInt(e.target.id);
-        setCurrentRecipe(searchedRecipes[index]);
         props.history.push(`/${user.username}/view/${searchedRecipes[index]._id}`)
     }
 
@@ -19,10 +31,17 @@ function SearchPage(props) {
             <div className="container">
                 <div className="row">
                     <h2>Search:</h2>
+                </div>
+                <div className="row">
                     <ul>
                         {searchedRecipes.map((val, index) => (
-                            <li key={index}>
-                                <div id={index} onClick={linkClick}>{val.name}</div>
+                            <li style={{ marginBottom: "10px" }} key={index}>
+                                <div id={index} onClick={linkClick}>
+                                    <h6 className="search-result">
+                                        {val.name}
+                                    </h6>
+                                    <p>{val.description.substring(0, 100)}</p>
+                                </div>
                             </li>
                         ))}
                     </ul>

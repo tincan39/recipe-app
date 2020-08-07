@@ -111,13 +111,13 @@ function Recipe(props) {
                 <form onSubmit={submit}>
                     <div className="row justify-content-center">
 
-                        <input contentEditable={type !== 'view'} style={{ textAlign: "center" }} className="col-4" type="text" onChange={(e) => { setName(e.target.value) }} value={name} />
+                        <input disabled={isView} style={{ textAlign: "center" }} className="col-4" type="text" onChange={(e) => { setName(e.target.value) }} value={name} />
                     </div>
                     <div className="row row-layout">
-                        <TextareaAutosize contentEditable={type !== 'view'} className="col-5" id="summary-box" onChange={(e) => { setSummary(e.target.value) }} value={summary} />
+                        <TextareaAutosize disabled={isView} className="col-5" id="summary-box" onChange={(e) => { setSummary(e.target.value) }} value={summary} />
                         <div className="col-4" style={{ marginLeft: "90px", marginTop: "10px" }}>
                             <img width="400" height="400" src={imgUrl} alt="" />
-                            {!isView && <label className="file-label" htmlFor="img-upload"> Upload image </label>}
+                            {!isView && <label className="file-label btn btn-info" htmlFor="img-upload"> Upload image </label>}
                             {!isView && <input onChange={imgSelect} id="img-upload" type="file" accept="image/*" />}
                         </div>
                     </div>

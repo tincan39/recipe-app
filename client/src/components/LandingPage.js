@@ -6,7 +6,12 @@ function LandingPage() {
     return (
         <div>
             <Nav />
-            <h2>Recify</h2>
+            <div id="outer">
+                <section id="landing">
+                    <h2>Recipe App</h2>
+                    <p >Search, Save, and Create Recipes</p>
+                </section>
+            </div>
         </div>
     )
 }

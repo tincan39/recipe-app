@@ -10,6 +10,8 @@ const authRoutes = require('./routes/authRoutes');
 const session = require('express-session');
 const imgRoutes = require('./routes/imgUpload');
 const fileUpload = require('express-fileupload');
+const MongoStore = require('connect-mongo')(session);
+const path = require('path');
 
 
 
@@ -32,9 +34,11 @@ app.use(fileUpload());
 //session for users
 app.use(session({
     secret: 'seven-stars',
-    resave: false,
+    resave: true,
     saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 }
+    cookie: { maxAge: 30000 },
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    rolling: true
 }));
 
 //passport setup
@@ -56,7 +60,18 @@ app.get('/authUser', (req, res) => {
     }
 })
 
-const PORT = 5000;
+
+//if in production
+if (process.env.NODE_ENV === 'production') {
+    //set static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`listening on Port ${PORT}`));
 

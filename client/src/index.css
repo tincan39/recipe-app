@@ -55,12 +55,44 @@ body{
   margin-top: 40px;
 }
 
-.r-cell li{
+.r-cell li:hover{
+  color: lightblue;
+}
+
+ul li{
   list-style-type: none;
 }
 
 ul{
   padding-left: 0;
+}
+
+input, textarea{
+  background-color: white;
+}
+
+input:disabled, textarea:disabled{
+  text-shadow: none;
+}
+
+.search-result{
+  color: #b11226 ;
+}
+
+.search-result:hover{
+  color: grey;
+}
+
+#landing{
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+#outer{
+  display: flex;
+  align-items: center;
+  justify-content: center
 }
 
 

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import UserContext from '../contexts/UserContext';
+import React, { useState, useEffect } from 'react';
 import { Nav2 } from './Nav';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -11,7 +10,7 @@ function Homepage(props) {
     const [recipes, setRecipes] = useState([]);
     const [searchField, setSearch] = useState('');
     const [savedRecipes, setSaved] = useState([]);
-    const { setCurrentRecipe, setSearched } = useContext(UserContext.context);
+    //const { setCurrentRecipe, setSearched } = useContext(UserContext.context);
 
 
     useEffect(() => {
@@ -33,29 +32,21 @@ function Homepage(props) {
     //redirects user to where the recipe can be edited
     const linkClick = (e) => {
         const index = parseInt(e.target.id);
-        setCurrentRecipe(recipes[index]);
+
         props.history.push(`/${user.username}/edit/${recipes[index]._id}`);
     }
 
     //redirects user to where recipe can be viewed
     const viewLink = (e) => {
         const index = parseInt(e.target.id);
-        setCurrentRecipe(savedRecipes[index]);
+
         props.history.push(`/${user.username}/view/${savedRecipes[index]._id}`);
     }
 
     const search = (e) => {
         e.preventDefault();
-        axios.get('/db/search', {
-            params: {
-                item: searchField,
-                uid: user.id
-            }
-        }).then(res => {
-            console.log(res.data);
-            setSearched(res.data);
-            props.history.push(`/${user.username}/search`);
-        });
+        props.history.push(`/${user.username}/search/${searchField}`);
+
     }
 
     return (
@@ -91,7 +82,7 @@ function Homepage(props) {
                     </div>
                 </div>
                 <div className="row">
-                    <Link className="btn btn-dark" to={`/${props.match.params.username}/create`}> Create Recipe </Link>
+                    <Link style={{ margin: "10px 10px 10px 0px" }} className="btn btn-dark" to={`/${props.match.params.username}/create`}> Create Recipe </Link>
                 </div>
             </div>
         </div>
