@@ -67,7 +67,7 @@ app.get('/authUser', (req, res) => {
 })
 
 
-//if in production
+//if in production, it executes
 if (process.env.NODE_ENV === 'production') {
     //set static folder
     app.use(express.static('client/build'));
