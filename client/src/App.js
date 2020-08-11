@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-//import Recipe from './components/Recipe';
 import CreateRecipe from "./components/CreateRecipe";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -9,22 +8,22 @@ import LandingPage from './components/LandingPage';
 import EditRecipe from './components/EditRecipe';
 import SearchPage from './components/SearchPage';
 import ViewRecipe from './components/ViewRecipe';
-import { BrowserRouter, Route, Redirect, useLocation } from 'react-router-dom';
-//import checkAuth from './utility';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-
+/**
+ * Used for Routes that cannot be accessed without authentication
+ */
 function ProtectedRoute({ component: Component, ...rest }) {
   const [authCheck, setAuthCheck] = useState({ isAuth: false, loading: true });
   const { auth } = useContext(UserContext.context);
-  let location = useLocation();
 
-
+  //async call to check authentication status
   useEffect(() => {
     axios.get('/authUser').then(res => {
       setAuthCheck({ isAuth: res.data.isAuth, loading: false });
     });
-  }, [location]);
+  }, []);
 
   return (
 

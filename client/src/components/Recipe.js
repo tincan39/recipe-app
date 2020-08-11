@@ -45,6 +45,7 @@ function Recipe(props) {
 
     }
 
+    //saves the changes made to recipe
     const submit = (e) => {
         e.preventDefault();
         const recipe = {
@@ -60,6 +61,7 @@ function Recipe(props) {
             .catch(err => setError(err.message));
     }
 
+    //deletes recipe from database
     const deleteRecipe = () => {
         axios.delete('/db/delete', {
             params: {
@@ -69,6 +71,7 @@ function Recipe(props) {
             .catch(err => setError(err.message));
     }
 
+    //saves the recipe if in view mode
     const saveRecipe = () => {
         if (!user.savedRecipes.includes(content.id)) {
             axios.post('/db/save', {
@@ -82,6 +85,7 @@ function Recipe(props) {
         }
     }
 
+    //unsaves the recipe if in view mode
     const unsaveRecipe = () => {
         axios.post('/db/unsave', {
             uid: user.id,
@@ -92,6 +96,7 @@ function Recipe(props) {
         });
     }
 
+    //img gets uploaded to cloud storage and link is provided
     const imgSelect = (e) => {
         console.log(e.target.files[0]);
         let formData = new FormData()

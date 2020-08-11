@@ -15,6 +15,7 @@ router.post('/upload', (req, res) => {
         if (err) {
             return res.status(400).send(err);
         }
+        //cdn link to image
         return res.send('http://dgsa391cfwse1.cloudfront.net/' + fileName);
     })
 });

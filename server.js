@@ -13,7 +13,7 @@ const fileUpload = require('express-fileupload');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 
-let mongoURI;
+let mongoURI;//enviorment variables are used if in production
 if (process.env.mongoURI) {
     mongoURI = process.env.mongoURI;
 }
