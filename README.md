@@ -1,6 +1,6 @@
 ### Recipe App
 
-This project is allows users to upload and save recipes. This is done through creating accounts. It also allows you to save any recipes other users have made
+This project is allows users to upload and save recipes. This is done through creating accounts. It also allows you to save any recipes other users have made.
 
 ## Project Screen Shot(s)
 
