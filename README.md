@@ -2,7 +2,7 @@
 
 This project is allows users to upload and save recipes. This is done through creating accounts. It also allows you to save any recipes other users have made.
 
-## Project Screen Shot(s)
+## Project Screen Shots
 
 ![alt text](https://github.com/tincan39/recipe-app/blob/master/pic1.png)
 
