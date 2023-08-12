@@ -12,17 +12,17 @@ const imgRoutes = require('./routes/imgUpload');
 const fileUpload = require('express-fileupload');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
+const dotenv = require('dotenv').config();
 
 let mongoURI;//enviorment variables are used if in production
-if (process.env.mongoURI) {
-    mongoURI = process.env.mongoURI;
-}
-else {
-    mongoURI = require('./config/keys').mongoURI;
-}
-
+// if (process.env.mongoURI) {
+//     mongoURI = process.env.mongoURI;
+// }
+// else {
+//     mongoURI = require('./config/keys').mongoURI;
+// }
 //connect to database
-mongoose.connect(process.env.mongoURI || require('./config/keys').mongoURI, { promiseLibrary: require('bluebird'), useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology:true })
     .then(console.log('connection successful')).catch(err => console.error(err));
 
 //express object

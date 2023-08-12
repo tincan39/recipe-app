@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const aws = require('aws-sdk');
+const aws = require("@aws-sdk/client-s3");
 
 
 const s3 = new aws.S3({
