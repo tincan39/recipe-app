@@ -3,6 +3,7 @@ name: Build docker image and pushing to docker hub
 on:
   push:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
 
