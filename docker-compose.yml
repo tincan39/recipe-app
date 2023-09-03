@@ -2,8 +2,14 @@ version: '3'
 services:
   backend:
     build: ./
+    image: ${DOCKER_USER}/personalprojects:v1-backend
+    environment:
+      - MONGO_URI=${MONGO_URI}
+      - S3_KEY=${S3_KEY}
+      - S3_SECRET=${S3_SECRET}
 
   webserver:
     build: ./nginx
+    image: ${DOCKER_USER}/personalprojects:v1-webserver
     ports:
       - 80:80
