@@ -20,3 +20,6 @@ jobs:
         PORT: ${{ vars.PORT }}
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
       run: echo $DOCKER_USER
+
+    - name: check  
+      run: echo ${{ secrets.DOCKER_USER }}
