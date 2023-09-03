@@ -1,0 +1,22 @@
+name: Env check
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: ENV check
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        S3_KEY: ${{ secrets.S3_KEY }}
+        S3_SECRET: ${{ secrets.S3_SECRET }}
+        PORT: ${{ vars.PORT }}
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+      run: echo $DOCKER_USER
