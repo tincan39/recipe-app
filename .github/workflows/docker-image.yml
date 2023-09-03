@@ -9,17 +9,17 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Build the Docker image
-      env:
+    env:
         MONGO_URI: ${{ secrets.MONGO_URI }}
         S3_KEY: ${{ secrets.S3_KEY }}
         S3_SECRET: ${{ secrets.S3_SECRET }}
         PORT: ${{ vars.PORT }}
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build the Docker image
       run: docker-compose build
 
     - name: Login to Docker Hub
