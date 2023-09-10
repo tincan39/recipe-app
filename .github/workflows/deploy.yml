@@ -6,4 +6,17 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-  
+    env:
+      KEY: ${{secrets.EC2_KEY}}
+      HOST: ${{secrets.HOST}}
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
+    
+    steps:
+        - uses: actions/checkout@v3
+        - name: deploy backend 
+          run: |
+            echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem 
+            scp -i privateKey.pem ./ ${HOST}:/
+            ssh -i privateKey.pem ${HOST} '
+              docker-compose up
+            '
