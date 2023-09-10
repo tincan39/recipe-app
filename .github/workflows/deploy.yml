@@ -15,8 +15,8 @@ jobs:
         - uses: actions/checkout@v3
         - name: deploy backend 
           run: |
-            echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem &&
-            scp -o StrictHostKeyChecking=no -i privateKey.pem ./ ${HOST}:/ &&
+            echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem 
+            scp -o StrictHostKeyChecking=no -i privateKey.pem ./ ${HOST}:/ 
             ssh -o StrictHostKeyChecking=no -i privateKey.pem ${HOST} '
               docker-compose up
             '
