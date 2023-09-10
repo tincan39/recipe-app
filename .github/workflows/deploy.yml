@@ -16,7 +16,7 @@ jobs:
         - name: deploy backend 
           run: |
             echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem &&
-            scp -i privateKey.pem ./ ${HOST}:/ &&
-            ssh -i privateKey.pem ${HOST} '
+            scp -o StrictHostKeyChecking=no -i privateKey.pem ./ ${HOST}:/ &&
+            ssh -o StrictHostKeyChecking=no -i privateKey.pem ${HOST} '
               docker-compose up
             '
