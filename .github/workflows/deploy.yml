@@ -17,6 +17,7 @@ jobs:
           run: |
             echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem 
             ssh -o StrictHostKeyChecking=no -i privateKey.pem ${HOST} '
+              cd recipe-app
               git pull
               docker-compose up
             '
