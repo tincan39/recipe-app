@@ -8,15 +8,19 @@ jobs:
     runs-on: ubuntu-latest
     env:
       KEY: ${{secrets.EC2_KEY}}
-      HOST: ${{secrets.HOST}}
-      DOCKER_USER: ${{ secrets.DOCKER_USER }}
-    
+      SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
     steps:
         - uses: actions/checkout@v3
-        - name: deploy backend 
+
+        - name: configure ssh
           run: |
-            echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem 
-            scp -o StrictHostKeyChecking=no -i privateKey.pem -r $(pwd) ${HOST}:
-            ssh -o StrictHostKeyChecking=no -i privateKey.pem ${HOST} '
-              docker-compose up
-            '
+          cd ~/.ssh
+          echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem
+          echo "$SSH_CONFIG" > config
+
+        - name: create docker context
+          run: docker context create remote ‐‐docker “host=ssh://remote”
+        
+        - name: deploy backend
+          run: docker-compose --context remote up -d
+          
