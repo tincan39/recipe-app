@@ -11,12 +11,12 @@ jobs:
       SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
     steps:
         - uses: actions/checkout@v3
-
+        
         - name: configure ssh
           run: |
-          cd ~/.ssh
-          echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem
-          echo "$SSH_CONFIG" > config
+            cd ~/.ssh
+            echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem
+            echo "$SSH_CONFIG" > config
 
         - name: create docker context
           run: docker context create remote ‐‐docker “host=ssh://remote”
