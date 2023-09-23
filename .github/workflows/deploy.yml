@@ -14,6 +14,7 @@ jobs:
         
         - name: configure ssh
           run: |
+            mkdir -p ~/.ssh/
             cd ~/.ssh
             echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem
             echo "$SSH_CONFIG" > config
