@@ -71,6 +71,14 @@ app.get("/", (req, res) =>{
     res.json({message:"docker is tough"})
 })
 
+
+/* 
+
+let me tell you the tale of how true men test in prod
+
+
+*/
+
 // //if in production, it executes
 // if (process.env.NODE_ENV === 'production') {
 //     //set static folder
