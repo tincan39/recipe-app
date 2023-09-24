@@ -25,5 +25,8 @@ jobs:
             aws-region: us-east-1
 
         - name: deploy frontend
-          run: npm run client-deploy
+          run: |
+            cd client
+            npm install
+            npm run client-deploy
           
