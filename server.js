@@ -71,14 +71,6 @@ app.get("/", (req, res) =>{
     res.json({message:"docker is tough"})
 })
 
-
-/* 
-
-let me tell you the tale of how true men test in prod
-bigger changess
-ja na nan an
-ja nana nana
-*/
 console.log("these nuts");
 // //if in production, it executes
 // if (process.env.NODE_ENV === 'production') {

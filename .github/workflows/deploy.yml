@@ -26,10 +26,7 @@ jobs:
 
         - name: create docker context
           run: docker context create remote --docker "host=ssh://remote"
-
-        - name: logging
-          run: docker context list
           
         - name: deploy backend
-          run: docker-compose --context remote up --force-recreate -d --build
+          run: docker-compose --context remote up -d --build
           
