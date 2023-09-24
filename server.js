@@ -52,12 +52,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routes
-app.use('/', authRoutes);
-app.use('/db', dbRoutes);
-app.use('/img', imgRoutes);
+app.use('api/', authRoutes);
+app.use('api/db', dbRoutes);
+app.use('api/img', imgRoutes);
 
 //used to see if a user is authenticated
-app.get('/authUser', (req, res) => {
+app.get('api/authUser', (req, res) => {
     if (!req.user) {
         res.send({ isAuth: false });
     }

@@ -39,6 +39,10 @@ function ProtectedRoute({ component: Component, ...rest }) {
 }
 
 function App() {
+  axios.interceptors.request.use(config => {
+    config.url = `/api${config.url}`;
+    return config;
+  });
 
   return (
     <div>
