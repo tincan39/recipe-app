@@ -57,7 +57,7 @@ router.post('/create', (req, res) => {
         imgUrl: req.body.imgUrl,
         userId: req.body.userId
     }).save();
-    res.send("done");
+    res.send("done mr.bark");
 });
 
 //updates a recipe item

@@ -42,7 +42,7 @@ router.post('/register', async (req, res) => {
 
             }).save().then((user) => { console.log(user) });
 
-            res.send("done");
+            res.send("done mr.start");
 
         }
     })
@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
 
 router.get('/logout', (req, res) => {
     req.logOut();
-    res.send('done');
+    res.send('done mr. stark');
 })
 
 module.exports = router;
