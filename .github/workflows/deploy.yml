@@ -23,6 +23,10 @@ jobs:
             cd ~/.ssh
             echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem
             echo "$SSH_CONFIG" > config
+            cat config
+
+        - name: logging
+          run: docker context list
 
         - name: create docker context
           run: docker context create remote --docker "host=ssh://remote"
