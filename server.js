@@ -52,12 +52,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routes
-app.use('api/', authRoutes);
-app.use('api/db', dbRoutes);
-app.use('api/img', imgRoutes);
+app.use('/api/', authRoutes);
+app.use('/api/db', dbRoutes);
+app.use('/api/img', imgRoutes);
 
 //used to see if a user is authenticated
-app.get('api/authUser', (req, res) => {
+app.get('/api/authUser', (req, res) => {
     if (!req.user) {
         res.send({ isAuth: false });
     }
@@ -82,6 +82,7 @@ app.get("/", (req, res) =>{
 // }
 
 const PORT = process.env.PORT || 5000;
+console.log(app._router.stack);
 
 app.listen(PORT, () => console.log(`listening on Port ${PORT}`));
 
