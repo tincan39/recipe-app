@@ -26,7 +26,10 @@ jobs:
 
         - name: create docker context
           run: docker context create remote --docker "host=ssh://remote"
+
+        - name: build docker images
+          run: docker-compose build --no-cache
         
         - name: deploy backend
-          run: docker-compose --context remote up --build -d
+          run: docker-compose --context remote up -d
           
