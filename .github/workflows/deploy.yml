@@ -31,5 +31,5 @@ jobs:
           run: docker context list
           
         - name: deploy backend
-          run: docker-compose --context remote up -d --build
+          run: docker-compose --context remote up --force-recreate -d --build
           

@@ -79,7 +79,7 @@ bigger changess
 ja na nan an
 ja nana nana
 */
-
+console.log("these nuts");
 // //if in production, it executes
 // if (process.env.NODE_ENV === 'production') {
 //     //set static folder
