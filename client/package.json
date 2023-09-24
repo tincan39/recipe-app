@@ -19,7 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "invalidate-cache":"aws cloudfront create-invalidation --distribution-id $CDNID  --paths '/*'",
+    "client-deploy": "aws s3 sync build/ s3://$BUCKET && npm run invalidate-cache"
   },
   "proxy": "http://localhost:5000/",
   "eslintConfig": {

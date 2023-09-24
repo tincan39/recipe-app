@@ -1,0 +1,26 @@
+name: Client Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-node@v3
+          with:
+            node-version: 18
+
+        - name: build front end
+          run: npm run build
+        
+        - uses: aws-actions/configure-aws-credentials@v4
+          with:
+            aws-access-key-id: ${{ secrets.S3_KEY }}
+            aws-secret-access-key: ${{ secrets.S3_SECRET }}
+            aws-region: us-east-1
+
+        - name: deploy frontend
+          run: npm run client-deploy
+          

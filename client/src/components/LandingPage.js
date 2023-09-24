@@ -9,7 +9,7 @@ function LandingPage() {
             <div id="outer">
                 <section id="landing">
                     <h2>Recipe App</h2>
-                    <p >Search, Save, and Create Recipes</p>
+                    <p >Search, Save, and Create Recipes.....</p>
                 </section>
             </div>
         </div>
