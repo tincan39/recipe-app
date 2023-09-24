@@ -52,7 +52,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routes
-app.use('/api/', authRoutes);
+app.use('/api', authRoutes);
 app.use('/api/db', dbRoutes);
 app.use('/api/img', imgRoutes);
 
