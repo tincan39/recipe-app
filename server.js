@@ -71,7 +71,6 @@ app.get("/", (req, res) =>{
     res.json({message:"docker is tough"})
 })
 
-console.log("these nuts");
 // //if in production, it executes
 // if (process.env.NODE_ENV === 'production') {
 //     //set static folder

@@ -13,3 +13,11 @@ services:
     image: ${DOCKER_USER}/personalprojects:v1.02-webserver
     ports:
       - 80:80
+      - 443:443
+    volumes:
+      - certbot:/var/www/certbot/
+      - sslkeys:/etc/letsencrypt/
+
+volumes:
+  certbot:
+  sslkeys:
