@@ -7,3 +7,5 @@ else
     echo "Files don't exist"
     rm "/etc/nginx/conf.d/app.conf"
 fi 
+
+rm "/etc/nginx/conf.d/default.conf"
