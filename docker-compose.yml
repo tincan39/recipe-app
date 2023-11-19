@@ -18,6 +18,12 @@ services:
       - certbot:/var/www/certbot/
       - sslkeys:/etc/letsencrypt/
 
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - certbot:/var/www/certbot/
+      - sslkeys:/etc/letsencrypt/
+
 volumes:
   certbot:
   sslkeys:

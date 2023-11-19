@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [ -e "/etc/letsencrypt/live/samplesapp.net/privkey.pem" ] && [ -e "/etc/letsencrypt/live/samplesapp.net/fullchain.pem" ]; then
+SSL_CONFIGURED=true
+
+if $SSL_CONFIGURED; then
     echo "Files exist"
     rm "/etc/nginx/conf.d/temp.conf"
 else
