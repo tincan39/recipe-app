@@ -1,0 +1,28 @@
+name: SSL Renewal
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *'
+
+jobs:
+  renew:
+    runs-on: ubuntu-latest
+    env:
+      KEY: ${{secrets.EC2_KEY}}
+      SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
+
+    steps:
+
+      - uses: actions/checkout@v3
+        
+      - name: configure ssh
+        run: |
+          mkdir -p ~/.ssh/
+          cd ~/.ssh
+          echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem
+          echo "$SSH_CONFIG" > config
+
+      - name: renew certificate
+        run: docker-compose --context remote run --rm certbot renew
+    
