@@ -11,6 +11,11 @@ jobs:
     env:
       KEY: ${{secrets.EC2_KEY}}
       SSH_CONFIG: ${{ secrets.SSH_CONFIG }}
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      S3_KEY: ${{ secrets.S3_KEY }}
+      S3_SECRET: ${{ secrets.S3_SECRET }}
+      PORT: ${{ vars.PORT }}
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
 
     steps:
 
