@@ -23,6 +23,9 @@ jobs:
           echo "$KEY" > privateKey.pem && chmod 0400 privateKey.pem
           echo "$SSH_CONFIG" > config
 
+      - name: create docker context
+        run: docker context create remote --docker "host=ssh://remote"
+
       - name: renew certificate
         run: docker-compose --context remote run --rm certbot renew
     
