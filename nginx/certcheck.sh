@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SSL_CONFIGURED=true
+SSL_CONFIGURED=false
 
 if $SSL_CONFIGURED; then
     echo "Files exist"
