@@ -81,7 +81,6 @@ app.get("/", (req, res) =>{
 // }
 
 const PORT = process.env.PORT || 5000;
-console.log(app._router.stack);
 
 app.listen(PORT, () => console.log(`listening on Port ${PORT}`));
 
